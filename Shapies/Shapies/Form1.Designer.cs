@@ -39,14 +39,14 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(8, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(780, 369);
+            this.pictureBox1.Size = new System.Drawing.Size(780, 443);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 400);
+            this.label1.Location = new System.Drawing.Point(8, 458);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 15);
             this.label1.TabIndex = 1;
@@ -54,14 +54,14 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(101, 397);
+            this.textBox1.Location = new System.Drawing.Point(119, 455);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(419, 23);
             this.textBox1.TabIndex = 2;
             // 
             // run_program
             // 
-            this.run_program.Location = new System.Drawing.Point(538, 397);
+            this.run_program.Location = new System.Drawing.Point(554, 455);
             this.run_program.Name = "run_program";
             this.run_program.Size = new System.Drawing.Size(213, 23);
             this.run_program.TabIndex = 3;
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 503);
             this.Controls.Add(this.run_program);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);

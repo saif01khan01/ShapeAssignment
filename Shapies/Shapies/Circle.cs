@@ -8,14 +8,21 @@ namespace Shapies
 {
     internal class Circle : Form1
     {
-        public void drawCircle(int radius, PictureBox p) {
+        /**
+         * The following method draws a circle using the DrawEllipse method of the graphics class. 
+         * 
+         * @param radius 
+         * 
+         * 
+         * */
 
-            Bitmap drawingSurface = new Bitmap(780, 369);
+        public void drawCircle(int radius, int xPos, int yPos, PictureBox p , Bitmap drawingSurface) {
+
             Graphics g = Graphics.FromImage(drawingSurface);
 
             Pen redPen = new Pen(Brushes.Red);
 
-            g.DrawEllipse(redPen, 0, 0, radius * 2, radius * 2);
+            g.DrawEllipse(redPen, xPos, yPos, radius * 2, radius * 2);
 
             p.Image = drawingSurface;
 
