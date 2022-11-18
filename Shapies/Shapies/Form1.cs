@@ -7,6 +7,8 @@ namespace Shapies
 
         bool fill = true;
 
+        Bitmap drawingSurface = new Bitmap(780, 443);
+
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace Shapies
                 int radius = Int32.Parse(splittxt[1]);
         
                 Circle ca = new Circle();
-                Bitmap drawingSurface = new Bitmap(780, 443);
+               
                 ca.drawCircle(radius, xPos, yPos, pictureBox1, drawingSurface);
             }
             else if (a.Contains("position pen"))
@@ -38,10 +40,22 @@ namespace Shapies
                 yPos = Int32.Parse(splittxt[3]);
 
                 pen pen = new pen();
-
-                Bitmap drawingSurface = new Bitmap(780, 443);
               
                 pen.positionPen(xPos, yPos, pictureBox1, drawingSurface);
+
+            } else if (a.Contains("rectangle"))
+            {
+                string[] splittxt = a.Split("");
+
+                xPos = Int32.Parse(splittxt[2]);
+                yPos = Int32.Parse(splittxt[3]);
+
+                rectangle rect = new rectangle();
+
+                rect.draw
+
+
+                   
             }
 
         }
