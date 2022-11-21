@@ -20,6 +20,16 @@ namespace Shapies
             parse.parser(textBox1.Text, pictureBox1, textBox2);
         }
 
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            saveAndLoad sal = new saveAndLoad();
+            sal.save(textBox2.Text);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            saveAndLoad sal = new saveAndLoad();
+            sal.load(textBox2);
+        }
     }
     }
