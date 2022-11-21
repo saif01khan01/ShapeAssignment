@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.run_program = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,11 +70,21 @@
             this.run_program.UseVisualStyleBackColor = true;
             this.run_program.Click += new System.EventHandler(this.run_program_Click);
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(807, 6);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(772, 443);
+            this.textBox2.TabIndex = 4;
+           // this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 503);
+            this.ClientSize = new System.Drawing.Size(1591, 613);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.run_program);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
@@ -92,5 +103,6 @@
         private Label label1;
         private TextBox textBox1;
         private Button run_program;
+        private TextBox textBox2;
     }
 }
