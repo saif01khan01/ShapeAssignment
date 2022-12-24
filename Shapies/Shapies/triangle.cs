@@ -27,7 +27,7 @@ namespace Shapies
             {
                 SolidBrush brush = new SolidBrush(Color.Red);
 
-                Point[] points = { new Point(10, 10), new Point(100, 10), new Point(50, 100) };
+                Point[] points = { new Point(xPos, yPos), new Point(100, 10), new Point(50, 100) };
                 if(fill == true) { 
                 g.FillPolygon(brush, points);
                 } else
@@ -62,7 +62,7 @@ namespace Shapies
             {
                 SolidBrush brush = new SolidBrush(Color.Blue);
 
-                Point[] points = { new Point(10, 10), new Point(100, 10), new Point(50, 100) };
+                Point[] points = { new Point(xPos, yPos), new Point(100, 10), new Point(50, 100) };
 
                 if (fill == true)
                 {
@@ -81,7 +81,7 @@ namespace Shapies
             {
                 SolidBrush brush = new SolidBrush(Color.Red);
 
-                Point[] points = { new Point(10, 10), new Point(100, 10), new Point(50, 100) };
+                Point[] points = { new Point(xPos, yPos), new Point(100, 10), new Point(50, 100) };
 
                 if (fill == true)
                 {
