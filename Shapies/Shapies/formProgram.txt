@@ -1,3 +1,4 @@
-rectangle 100 100
 circle 100
+rectangle 300
+position pen 10 10
 triangle
