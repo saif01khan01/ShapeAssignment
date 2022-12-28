@@ -17,7 +17,7 @@ namespace Shapies
         {
            // Graphics g = Graphics.FromImage(drawingSurface);
 
-            parse.parser(textBox1.Text, pictureBox1);
+           parse.parser(textBox1.Text, pictureBox1 , textBox1);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,9 +34,17 @@ namespace Shapies
 
         private void multiBtn_Click(object sender, EventArgs e)
         {
+          //  Parser.listV.Clear();
+           //
+           //Parser.listVn.Clear();
+
+
             string [] multilines = textBox2.Text.Split(Environment.NewLine);
 
-            parse.multiLineParse(multilines, pictureBox1, textBox2);
+          foreach(string prog in multilines)
+            {
+                parse.parser(prog, pictureBox1, textBox2);
+            }
         }
 
         

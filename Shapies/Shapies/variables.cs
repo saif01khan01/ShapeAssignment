@@ -13,6 +13,7 @@ namespace Shapies
         {
             // Extract the integer value from the declaration string
             string pattern = @"^(?<name>\w+) = (?<value>\d+)$";
+
             Match match = Regex.Match(declaration, pattern);
             string valueString = match.Groups["value"].Value;
 
@@ -42,6 +43,7 @@ namespace Shapies
             {
                 // Extract the value of the "name" group and return it
                 return match.Groups["name"].Value;
+               
             }
 
             // If the match is not successful, return null
