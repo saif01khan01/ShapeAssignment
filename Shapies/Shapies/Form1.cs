@@ -8,6 +8,8 @@ namespace Shapies
         
         Parser parse = new Parser();
 
+       
+
         public Form1()
         {
             InitializeComponent();
@@ -33,18 +35,16 @@ namespace Shapies
         }
 
         private void multiBtn_Click(object sender, EventArgs e)
-        {
-          //  Parser.listV.Clear();
-           //
-           //Parser.listVn.Clear();
-
-
-            string [] multilines = textBox2.Text.Split(Environment.NewLine);
-
-          foreach(string prog in multilines)
+{
+            string[] multilines = textBox2.Text.Split(Environment.NewLine);
+          
+            if(parse.SyntaxCheck(multilines))
             {
-                parse.parser(prog, pictureBox1, textBox2);
-            }
+                 foreach (string prog in multilines)
+                {
+                    parse.parser(prog, pictureBox1, textBox2);
+                 }
+            } 
         }
 
         

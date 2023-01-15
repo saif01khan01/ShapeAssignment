@@ -21,17 +21,88 @@ namespace Shapies
 
         List<int> listV = new List<int>();
 
-        /**
-       * <summary> this method validates the users entries </summary>
-       * 
-       * <param name="p"> picture box where bitmap is drawn to, i have used it here as unable to locally access picturebox </param>
-       * <param name="program"> this is the 'program' the user enters to draw </param>
-       * <param name="textBox"> textbox where user enters multiline commands </param>
-       * 
-       * 
-       * */
 
-        public void parser(string program, PictureBox p, TextBox textBox)
+        public bool SyntaxCheck(string[] commands)
+        {
+            bool syntaxCheckPassed = true;
+            string errorMessage = "";
+
+            // Iterate through each command in the array
+            for (int i = 0; i < commands.Length; i++)
+            {
+                string cmd = commands[i];
+
+                // Check the syntax of the command using regular expressions
+                if (Regex.IsMatch(cmd, @"^position pen \d+ \d+$"))
+                {
+                    // The command has the correct syntax for "position pen <int> <int>"
+                }
+                else if (Regex.IsMatch(cmd, @"^pen draw \d+ \d+$"))
+                {
+                    // The command has the correct syntax for "pen draw <int> <int>"
+                }
+                else if (Regex.IsMatch(cmd, @"^triangle \d+ \d+$"))
+                {
+                    // The command has the correct syntax for "triangle <int> <int>"
+                }
+                else if (Regex.IsMatch(cmd, @"^pen (red|green|blue)$"))
+                {
+                    // The command has the correct syntax for "pen <color>"
+                }
+                else if (Regex.IsMatch(cmd, @"^fill (on|off)$"))
+                {
+                    // The command has the correct syntax for "fill <on/off>"
+                }
+                else if (Regex.IsMatch(cmd, @"^loop \d+$"))
+                {
+                    // The command has the correct syntax for "loop <int>"
+                }
+                else if (cmd == "end")
+                {
+                    // The command has the correct syntax for "end"
+                }
+                else if (Regex.IsMatch(cmd, @"^circle \d+$"))
+                {
+                    // The command has the correct syntax for "circle <int>"
+                }
+                else if (Regex.IsMatch(cmd, @"^rectangle \d+ \d+$"))
+                {
+                    // The command has the correct syntax for "rectangle <int> <int>"
+                }
+                else
+                {
+                    // The command does not have the correct syntax
+                    syntaxCheckPassed = false;
+                    errorMessage += "Invalid command syntax at line " + (i + 1) + ": " + cmd + "\n";
+                }
+            }
+
+            // Display the result of the syntax check
+            if (syntaxCheckPassed)
+            {
+                MessageBox.Show("Syntax check passed!");
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Syntax check failed!\n" + errorMessage);
+                return false;
+            }
+        }
+
+
+
+            /**
+           * <summary> this method validates the users entries </summary>
+           * 
+           * <param name="p"> picture box where bitmap is drawn to, i have used it here as unable to locally access picturebox </param>
+           * <param name="program"> this is the 'program' the user enters to draw </param>
+           * <param name="textBox"> textbox where user enters multiline commands </param>
+           * 
+           * 
+           * */
+
+            public void parser(string program, PictureBox p, TextBox textBox)
         {
 
 
@@ -338,6 +409,8 @@ namespace Shapies
                         // Add the variable name to the list if it is not a duplicate
                         listVn.Add(variableName);
 
+                        
+
                         // Convert the value to an integer and add it to the list of values
                         listV.Add(variables.ConvertToInt(program));
 
@@ -352,55 +425,9 @@ namespace Shapies
                     
                     }
                         break;
-                case "loop":
-                    // Initialize a counter variable and set it to the value of the first argument after "loop"
-                    int counter = Int32.Parse(splitprogram[1]);
-
-                    // Initialize a string variable to store the commands between "loop" and "end"
-                    string commands = "";
-
-                    // Initialize a flag variable to track when the "end" command is encountered
-                    bool endReached = false;
-
-                    // Iterate over the input string starting from the second line
-                    for (int i = 1; i < splitprogram.Length; i++)
-                    {
-                        // Check if the current line is "end"
-                        if (splitprogram[i].Equals("end"))
-                        {
-                            // Set the endReached flag to true to indicate that the "end" command has been encountered
-                            endReached = true;
-                            // Break out of the loop
-                            break;
-                        }
-                        // If the current line is not "end", add it to the commands string
-                        else
-                        {
-                            commands += splitprogram[i] + " ";
-                        }
-                    }
-
-                    // Check if the endReached flag is true
-                    if (endReached)
-                    {
-                        // Use a while loop to repeat the commands until the counter reaches 0
-                        while (counter > 0)
-                        {
-                            // Parse and execute the commands
-                            parser(commands, p, textBox);
-                            // Decrement the counter
-                            counter--;
-                        }
-                    }
-                    // If the endReached flag is false, it means that the "end" command was not encountered
-                    else
-                    {
-                        MessageBox.Show("Error: missing 'end' command");
-                    }
-                    break;
 
 
-                        default:
+                default:
                     MessageBox.Show("Error in your program enter valid input please");
                     break;
             }
