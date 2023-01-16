@@ -25,89 +25,119 @@ namespace Shapies
       * 
       * 
       * */
-        public void drawRect(int xPos, int yPos, int width, int height, PictureBox p, Bitmap drawingSurface, Graphics g, string color, bool fill) {
-           
-            if(color.Equals("red")) { 
+        public void drawRect(int xPos, int yPos, int width, int height, PictureBox p, Bitmap drawingSurface, Graphics g, string color, bool fill)
+        {
+            Pen pen;
+            Brush brush;
+            Rectangle rect = new Rectangle(xPos, yPos, width, height);
 
-             Pen redPen = new Pen(Brushes.Red);
+            switch (color)
+            {
+                case "red":
+                    pen = new Pen(Brushes.Red);
+                    brush = Brushes.Red;
+                    break;
+                case "green":
+                    pen = new Pen(Brushes.Green);
+                    brush = Brushes.Green;
+                    break;
+                case "blue":
+                    pen = new Pen(Brushes.Blue);
+                    brush = Brushes.Blue;
+                    break;
+                case "redgreen":
+                    // Create a new thread for flashing red and green
+                    Thread thread = new Thread(() =>
+                    {
+                        while (true)
+                        {
+                            pen = new Pen(Brushes.Red);
+                            brush = Brushes.Red;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
 
-             Rectangle rect = new Rectangle(xPos, yPos, width, height);
+                            pen = new Pen(Brushes.Green);
+                            brush = Brushes.Green;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
+                        }
+                    });
+                    thread.Start();
+                    return;
+                case "blueyellow":
+                    // Create a new thread for flashing blue and yellow
+                    thread = new Thread(() =>
+                    {
+                        while (true)
+                        {
+                            pen = new Pen(Brushes.Blue);
+                            brush = Brushes.Blue;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
 
-                if(fill == false) 
-                { 
+                            pen = new Pen(Brushes.Yellow);
+                            brush = Brushes.Yellow;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
+                        }
+                    });
+                    thread.Start();
+                    return;
+                case "blackwhite":
+                    // Create a new thread for flashing black and white
+                    thread = new Thread(() =>
+                    {
+                        while (true)
+                        {
+                            pen = new Pen(Brushes.Black);
+                            brush = Brushes.Black;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
 
-                 g.DrawRectangle(redPen, rect);
-           
-                } else
-                {
-                    g.FillRectangle(Brushes.Red, rect);
-                }
-                p.Image = drawingSurface;
-
-                g.Dispose();
+                            pen = new Pen(Brushes.White);
+                            brush = Brushes.White;
+                            if (fill)
+                                g.FillRectangle(brush, rect);
+                            else
+                                g.DrawRectangle(pen, rect);
+                            p.Image = drawingSurface;
+                            Thread.Sleep(500);
+                        }
+                    });
+                    thread.Start();
+                    return;
+                default:
+                    pen = new Pen(Brushes.Red);
+                    brush = Brushes.Red;
+                    break;
             }
-            else if (color.Equals("blue"))
-            {
-                Pen bluePen = new Pen(Brushes.Blue);
 
-                Rectangle rect = new Rectangle(xPos, yPos, width, height);
-
-                if (fill == false)
-                {
-
-                    g.DrawRectangle(bluePen, rect);
-
-                }
-                else
-                {
-                    g.FillRectangle(Brushes.Blue, rect);
-                }
-
-                p.Image = drawingSurface;
-
-                g.Dispose();
-            } else if(color.Equals("green"))
-            {
-                Pen greenPen = new Pen(Brushes.Green);
-
-                Rectangle rect = new Rectangle(xPos, yPos, width, height);
-
-                if (fill == false)
-                {
-
-                    g.DrawRectangle(greenPen, rect);
-
-                }
-                else
-                {
-
-                    g.FillRectangle(Brushes.Green, rect);
-
-                }
-
-                p.Image = drawingSurface;
-
-                g.Dispose();
-            } else
-            {
-                Pen redPen = new Pen(Brushes.Red);
-
-                Rectangle rect = new Rectangle(xPos, yPos, width, height);
-
-                if (fill == false)
-                {
-
-                    g.DrawRectangle(redPen, rect);
-
-                }
-                else
-                {
-                    g.FillRectangle(Brushes.Red, rect);
-                }
-                p.Image = drawingSurface;
-
-                g.Dispose();
-            }
-    }  
+            if (fill)
+                g.FillRectangle(brush, rect);
+            else
+                g.DrawRectangle(pen, rect);
+            p.Image = drawingSurface;
+            g.Dispose();
+        }
     }
 }

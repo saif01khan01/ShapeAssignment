@@ -33,19 +33,19 @@ namespace Shapies
                 string cmd = commands[i];
 
                 // Check the syntax of the command using regular expressions
-                if (Regex.IsMatch(cmd, @"^position pen \d+ \d+$"))
+                if (Regex.IsMatch(cmd, @"^position pen (\d+|\d+) (\d+|\d+)$"))
                 {
                     // The command has the correct syntax for "position pen <int> <int>"
                 }
-                else if (Regex.IsMatch(cmd, @"^pen draw \d+ \d+$"))
+                else if (Regex.IsMatch(cmd, @"^pen draw (\d+|\d+) (\d+|\d+)$"))
                 {
                     // The command has the correct syntax for "pen draw <int> <int>"
                 }
-                else if (Regex.IsMatch(cmd, @"^triangle \d+ \d+$"))
+                else if (Regex.IsMatch(cmd, @"^triangle$"))
                 {
-                    // The command has the correct syntax for "triangle <int> <int>"
+                    // The command has the correct syntax for "triangle"
                 }
-                else if (Regex.IsMatch(cmd, @"^pen (red|green|blue)$"))
+                else if (Regex.IsMatch(cmd, @"^color (red|green|blue|redgreen|blueyellow|blackwhite)$"))
                 {
                     // The command has the correct syntax for "pen <color>"
                 }
@@ -53,7 +53,7 @@ namespace Shapies
                 {
                     // The command has the correct syntax for "fill <on/off>"
                 }
-                else if (Regex.IsMatch(cmd, @"^loop \d+$"))
+                else if (Regex.IsMatch(cmd, @"^loop (\d+|\d+)$"))
                 {
                     // The command has the correct syntax for "loop <int>"
                 }
@@ -61,11 +61,11 @@ namespace Shapies
                 {
                     // The command has the correct syntax for "end"
                 }
-                else if (Regex.IsMatch(cmd, @"^circle \d+$"))
+                else if (Regex.IsMatch(cmd, @"^circle (\d+|\d+)$"))
                 {
                     // The command has the correct syntax for "circle <int>"
                 }
-                else if (Regex.IsMatch(cmd, @"^rectangle \d+ \d+$"))
+                else if (Regex.IsMatch(cmd, @"^rectangle (\d+|\d+) (\d+|\d+)$"))
                 {
                     // The command has the correct syntax for "rectangle <int> <int>"
                 }
@@ -92,17 +92,17 @@ namespace Shapies
 
 
 
-            /**
-           * <summary> this method validates the users entries </summary>
-           * 
-           * <param name="p"> picture box where bitmap is drawn to, i have used it here as unable to locally access picturebox </param>
-           * <param name="program"> this is the 'program' the user enters to draw </param>
-           * <param name="textBox"> textbox where user enters multiline commands </param>
-           * 
-           * 
-           * */
+        /**
+       * <summary> this method validates the users entries </summary>
+       * 
+       * <param name="p"> picture box where bitmap is drawn to, i have used it here as unable to locally access picturebox </param>
+       * <param name="program"> this is the 'program' the user enters to draw </param>
+       * <param name="textBox"> textbox where user enters multiline commands </param>
+       * 
+       * 
+       * */
 
-            public void parser(string program, PictureBox p, TextBox textBox)
+        public void parser(string program, PictureBox p, TextBox textBox)
         {
 
 
@@ -369,7 +369,9 @@ namespace Shapies
 
                 case "color":
 
-                    if (color.Equals("red") || color.Equals("green") || color.Equals("blue"))
+                    color.ToLower();
+
+                    if (color.Equals("red") || color.Equals("green") || color.Equals("blue") || color.Equals("redgreen") || color.Equals("blueyellow") || color.Equals("blackwhite"))
                     {
                         color = splitprogram[1];
                         break;
@@ -425,6 +427,8 @@ namespace Shapies
                     
                     }
                         break;
+
+
 
 
                 default:

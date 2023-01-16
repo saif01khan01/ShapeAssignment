@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shapies
 {
-    internal class Circle
+    class Circle
     {
-        
+
 
         /**
          * <summary> this method draws a circle at a specified radius</summary>
@@ -25,90 +25,158 @@ namespace Shapies
          * 
          * */
 
-        public void drawCircle(int radius, int xPos, int yPos, PictureBox p , Bitmap drawingSurface, Graphics g , string color , bool fill) {
-
-            //validates colours
-            if (color.Equals("red"))
+        public void drawCircle(int radius, int xPos, int yPos, PictureBox p, Bitmap drawingSurface, Graphics g, string color, bool fill)
+        {
+            if (color.Equals("redgreen"))
             {
-                Pen redPen = new Pen(Brushes.Red);
-
-                Parser parse = new Parser();
-
-                //checks fill if false unfilled shape drawn if true filled shape drawn
-                if(fill == false) { 
-
-                g.DrawEllipse(redPen, xPos, yPos, radius * 2, radius * 2);
-
-                } else
+                Thread redGreenThread = new Thread(() => {
+                    while (true)
+                    {
+                        if (fill == false)
+                        {
+                            Pen redPen = new Pen(Brushes.Red);
+                            g.DrawEllipse(redPen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.Red, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                        if (fill == false)
+                        {
+                            Pen greenPen = new Pen(Brushes.Green);
+                            g.DrawEllipse(greenPen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.Green, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                    }
+                });
+                redGreenThread.Start();
+            }
+            else if (color.Equals("blueyellow"))
+            {
+                Thread blueYellowThread = new Thread(() => {
+                    while (true)
+                    {
+                        if (fill == false)
+                        {
+                            Pen bluePen = new Pen(Brushes.Blue);
+                            g.DrawEllipse(bluePen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.Blue, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                        if (fill == false)
+                        {
+                            Pen yellowPen = new Pen(Brushes.Yellow);
+                            g.DrawEllipse(yellowPen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.Yellow, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                    }
+                });
+                blueYellowThread.Start();
+            }
+            else if (color.Equals("blackwhite"))
+            {
+                Thread blackWhiteThread = new Thread(() => {
+                    while (true)
+                    {
+                        if (fill == false)
+                        {
+                            Pen blackPen = new Pen(Brushes.Black);
+                            g.DrawEllipse(blackPen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.Black, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                        if (fill == false)
+                        {
+                            Pen whitePen = new Pen(Brushes.White);
+                            g.DrawEllipse(whitePen, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        else
+                        {
+                            g.FillEllipse(Brushes.White, xPos, yPos, radius * 2, radius * 2);
+                        }
+                        p.Image = drawingSurface;
+                        Thread.Sleep(500);
+                    }
+                });
+                blackWhiteThread.Start();
+            }
+            else if (color.Equals("red"))
+            {
+                if (fill == false)
+                {
+                    Pen redPen = new Pen(Brushes.Red);
+                    g.DrawEllipse(redPen, xPos, yPos, radius * 2, radius * 2);
+                }
+                else
                 {
                     g.FillEllipse(Brushes.Red, xPos, yPos, radius * 2, radius * 2);
                 }
                 p.Image = drawingSurface;
-
-                g.Dispose();
-               
-            } else if (color.Equals("green"))
+            }
+            else if (color.Equals("green"))
             {
-                Pen greenPen = new Pen(Brushes.Green);
-
-                Parser parse = new Parser();
-
                 if (fill == false)
                 {
+                    Pen greenPen = new Pen(Brushes.Green);
                     g.DrawEllipse(greenPen, xPos, yPos, radius * 2, radius * 2);
-
-                } else
+                }
+                else
                 {
                     g.FillEllipse(Brushes.Green, xPos, yPos, radius * 2, radius * 2);
                 }
-
                 p.Image = drawingSurface;
-
-                g.Dispose();
             }
             else if (color.Equals("blue"))
             {
-                Pen bluePen = new Pen(Brushes.Blue);
-
-                Parser parse = new Parser();
-
                 if (fill == false)
                 {
+                    Pen bluePen = new Pen(Brushes.Blue);
                     g.DrawEllipse(bluePen, xPos, yPos, radius * 2, radius * 2);
-
                 }
                 else
                 {
                     g.FillEllipse(Brushes.Blue, xPos, yPos, radius * 2, radius * 2);
                 }
-                
                 p.Image = drawingSurface;
-
-                g.Dispose();
-            } else
+            }
+            else
             {
-                Pen redPen = new Pen(Brushes.Red);
-
-                Parser parse = new Parser();
-
                 if (fill == false)
                 {
-
+                    Pen redPen = new Pen(Brushes.Red);
                     g.DrawEllipse(redPen, xPos, yPos, radius * 2, radius * 2);
-
                 }
                 else
                 {
                     g.FillEllipse(Brushes.Red, xPos, yPos, radius * 2, radius * 2);
                 }
                 p.Image = drawingSurface;
-
-                g.Dispose();
             }
-
-
-
-
         }
+
+
+
+
     }
-}
+    }
+
