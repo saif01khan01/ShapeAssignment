@@ -7,8 +7,22 @@ using System.Threading.Tasks;
 
 namespace Shapies
 {
-    internal class variables
+    public class variables
     {
+        
+        /// <summary>
+        /// Converts a string representation of a variable declaration to an integer.
+        /// </summary>
+        /// <param name="declaration">
+        /// The string representation of the variable declaration in the form of "name = value".
+        /// </param>
+        /// <returns>
+        /// The integer value of the variable.
+        /// </returns>
+        /// <exception cref="FormatException">
+        /// Thrown if the string provided is not in the correct format for a variable declaration.
+        /// </exception>
+
         public static int ConvertToInt(string declaration)
         {
             // Extract the integer value from the declaration string
@@ -30,6 +44,11 @@ namespace Shapies
             }
         }
 
+        /// <summary>
+        /// getVariableName method extracts the value of the "name" group and returns it from the given string declaration
+        /// </summary>
+        /// <param name="declaration">string to be matched with the regular expression</param>
+        /// <returns>the value of the "name" group if the match is successful, otherwise returns null</returns>
         public static string getVariableName(string declaration)
         {
             // Compile the regular expression

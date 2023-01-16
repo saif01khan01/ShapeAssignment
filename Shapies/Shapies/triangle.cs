@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Shapies
 {
-    internal class triangle
+    public class triangle
     {
-        /**
-      * <summary> this method positions the pen </summary>
-      * 
-      * <param name="p"> picture box where bitmap is drawn to </param>
-      * <param name="drawingSurface"> bitmap where drawing is done to </param>
-      * <param name="g"> graphics class which is used to draw </param>
-      * <param name="color"> color of the shape, currently a string which is validated within the method </param>
-      * <param name="fill"> checks to fill shape or not, user passes it and method validates this </param>
-      * <param name="xPos"> x position, this is used as a point for the triangle </param>
-      * <param name="yPos"> y position this is used as a point for the triangle s</param>
-      * 
-      * 
-      * */
+       /// <summary>
+/// This method draws a triangle at the specified position, color and fill.
+/// The color can be one of red, green, blue, redgreen, blueyellow, or blackwhite.
+/// If the color is "redgreen", "blueyellow", or "blackwhite", the triangle will flash between two colors.
+/// </summary>
+/// <param name = "p" > picture box where bitmap is drawn to </param>
+/// <param name = "drawingSurface" > bitmap where drawing is done to </param>
+/// <param name = "g" > graphics class which is used to draw the triangle</param>
+/// <param name = "color" > color of the triangle, as a string </param>
+/// <param name = "fill" > boolean value indicating if the triangle should be filled or not</param>
+/// <param name = "xPos" > x position, this is used as a point for the triangle</param>
+/// <param name = "yPos" > y position this is used as a point for the triangle s</param>
+   
         public void drawTri(PictureBox p, Bitmap drawingSurface, Graphics g, string color, bool fill, int xPos, int yPos)
         {
             Pen pen = new Pen(Brushes.Red);
@@ -123,7 +123,7 @@ namespace Shapies
                     });
                     thread.Start();
                     return;
-                default:
+                default: throw new Exception("invalid color input");
                     break;
             }
 

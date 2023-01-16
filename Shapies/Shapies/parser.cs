@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Shapies
 {
-    internal class Parser 
+    public class Parser 
     {
 
         public int xPos;
@@ -33,13 +33,13 @@ namespace Shapies
                 string cmd = commands[i];
 
                 // Check the syntax of the command using regular expressions
-                if (Regex.IsMatch(cmd, @"^position pen (\d+|\d+) (\d+|\d+)$"))
+                if (Regex.IsMatch(cmd, @"^position pen (\d+|\w+) (\d+|\w+)$"))
                 {
-                    // The command has the correct syntax for "position pen <int> <int>"
+                    // The command has the correct syntax for "position pen <int or string> <int or string>"
                 }
-                else if (Regex.IsMatch(cmd, @"^pen draw (\d+|\d+) (\d+|\d+)$"))
+                else if (Regex.IsMatch(cmd, @"^pen draw (\d+|\w+) (\d+|\w+)$"))
                 {
-                    // The command has the correct syntax for "pen draw <int> <int>"
+                    // The command has the correct syntax for "pen draw <int or string> <int or string>"
                 }
                 else if (Regex.IsMatch(cmd, @"^triangle$"))
                 {
@@ -53,21 +53,27 @@ namespace Shapies
                 {
                     // The command has the correct syntax for "fill <on/off>"
                 }
-                else if (Regex.IsMatch(cmd, @"^loop (\d+|\d+)$"))
+                else if (Regex.IsMatch(cmd, @"^loop (\d+|\w+)$"))
                 {
-                    // The command has the correct syntax for "loop <int>"
+                    // The command has the correct syntax for "loop <int or string>"
                 }
                 else if (cmd == "end")
                 {
                     // The command has the correct syntax for "end"
                 }
-                else if (Regex.IsMatch(cmd, @"^circle (\d+|\d+)$"))
+                else if (Regex.IsMatch(cmd, @"^circle (\d+|\w+)$"))
                 {
-                    // The command has the correct syntax for "circle <int>"
+                    // The command has the correct syntax for "circle <int or string>"
                 }
-                else if (Regex.IsMatch(cmd, @"^rectangle (\d+|\d+) (\d+|\d+)$"))
+                else if (Regex.IsMatch(cmd, @"^rectangle (\d+|\w+) (\d+|\w+)$"))
                 {
-                    // The command has the correct syntax for "rectangle <int> <int>"
+                    // The command has the correct syntax for "rectangle <int or string> <int or string>"
+                }
+                else if (Regex.IsMatch(cmd, @"^(\w+) = (\d+|\w+)$"))
+                {
+                    // The command has the correct syntax for "<variable name> = <int or string>"
+                    var variableName = Regex.Match(cmd, @"^(\w+) = (\d+|\w+)$").Groups[1].Value;
+                    var value = Regex.Match(cmd, @"^(\w+) = (\d+|\w+)$").Groups[2].Value;
                 }
                 else
                 {
@@ -92,15 +98,14 @@ namespace Shapies
 
 
 
-        /**
-       * <summary> this method validates the users entries </summary>
-       * 
-       * <param name="p"> picture box where bitmap is drawn to, i have used it here as unable to locally access picturebox </param>
-       * <param name="program"> this is the 'program' the user enters to draw </param>
-       * <param name="textBox"> textbox where user enters multiline commands </param>
-       * 
-       * 
-       * */
+        /// <summary>
+        /// This method validates the user's entries and performs the appropriate action based on the command entered. 
+        /// It checks for 'circle' and 'rectangle' and much more commands and performs the corresponding action. 
+        /// It also uses regular expressions to validate the user's input and check for any errors.
+        /// </summary>
+        /// <param name="program"> The 'program' the user enters to draw </param>
+        /// <param name="p"> Picture box where bitmap is drawn to, used here as it is unable to locally access the picturebox </param>
+        /// <param name="textBox"> Textbox where user enters multiline commands </param>
 
         public void parser(string program, PictureBox p, TextBox textBox)
         {
@@ -114,138 +119,141 @@ namespace Shapies
 
             switch (splitprogram[0])
             {
-               
+
                 case "circle":
 
-
-                    if (Regex.IsMatch(program, @"circle\s+(\d+)"))
+                    try
                     {
-                        //circle command takes < 3 'parameters' this validates that
-                        if (splitprogram.Count() < 3)
+                        if (Regex.IsMatch(program, @"circle\s+(\d+)"))
                         {
-
-                            //tries to parse string to int catches exceptions if not
-                            try
+                            //circle command takes < 3 'parameters' this validates that
+                            if (splitprogram.Count() < 3)
                             {
-
                                 string[] splittxt = program.Split(" ");
-
-
                                 int radius = Int32.Parse(splittxt[1]);
-
                                 Circle ca = new Circle();
-
                                 ca.drawCircle(radius, xPos, yPos, p, drawingSurface, g, color, fill);
-
                                 break;
-
                             }
-                            catch (FormatException e)
+                        }
+                        else if (Regex.IsMatch(program, @"^(?<command>circle) (?<name>\w+)$"))
+                        {
+                            // Initialize a flag to track if the circle variable has been found
+                            bool found = false;
+
+                            for (int b = 0; b < listVn.Count; b++)
                             {
-                                MessageBox.Show("Must enter a numerical radius");
-                                break;
+                                if (listV[b] > 0 && listVn[b].Equals(splitprogram[1]))
+                                {
+                                    Circle ca = new Circle();
+                                    int value = listV[b]; ca.drawCircle(value, xPos, yPos, p, drawingSurface, g, color, fill);
+                                    // Set the flag to true to indicate that the circle variable has been found
+                                    found = true;
+                                }
                             }
-                            catch (IndexOutOfRangeException e)
+                            // If the flag is still false after the loop has completed, it means that the circle variable has not been found
+                            if (!found)
                             {
-                                MessageBox.Show("Missing radius parameter");
-                                break;
+                                MessageBox.Show("error initialise variabel first");
                             }
-
+                        }
+                        else
+                        {
+                            MessageBox.Show("too many parameters for a circle");
                         }
                     }
-                    else if (Regex.IsMatch(program, @"^(?<command>circle) (?<name>\w+)$"))
+                    catch (FormatException e)
                     {
-                        // Initialize a flag to track if the circle variable has been found
-                        bool found = false;
-
-                        for (int b = 0; b < listVn.Count; b++)
-                        {
-                            if (listV[b] > 0 && listVn[b].Equals(splitprogram[1]))
-                            {
-                                Circle ca = new Circle();
-
-                                int value = listV[b];
-
-                                ca.drawCircle(value, xPos, yPos, p, drawingSurface, g, color, fill);
-
-                                // Set the flag to true to indicate that the circle variable has been found
-                                found = true;
-                            }
-                        }
-
-                        // If the flag is still false after the loop has completed, it means that the circle variable has not been found
-                        if (!found)
-                        {
-                            MessageBox.Show("error initialise variabel first");
-                        }
+                        MessageBox.Show("Must enter a numerical radius");
                     }
-                    else
+                    catch (IndexOutOfRangeException e)
                     {
-                        MessageBox.Show("too many parameters for a circle");
+                        MessageBox.Show("Missing radius parameter");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        MessageBox.Show("Invalid color value. Accepted values are 'redgreen', 'blueyellow' and 'blackwhite'.");
                     }
                     break;
 
                 case "rectangle":
 
-                    if (splitprogram.Count() < 4)
+                    try
                     {
-
-                      
-                        // Check if the input string matches the regex pattern for numerical width and height
-                        if (Regex.IsMatch(program, @"rectangle \d+ \d+"))
+                        if (splitprogram.Count() < 4)
                         {
-                            // Get the width and height from the input string
-                            int width = Int32.Parse(splitprogram[1]);
-                            int height = Int32.Parse(splitprogram[2]);
-
-                            // Create a rectangle object and draw it
-                            rectangle rect = new rectangle();
-                            rect.drawRect(xPos, yPos, width, height, p, drawingSurface, g, color, fill);
-                        }
-                        // Check if the input string matches the regex pattern for string width and height
-                        else if (Regex.IsMatch(program, @"rectangle \w+ \w+"))
-                        {
-                            // Get the width and height variables from the program string
-                            string width = splitprogram[1];
-                            string height = splitprogram[2];
-
-                            // Check if the width and height variables are defined in the list of variables
-                            if (listVn.Contains(width) && listVn.Contains(height))
+                            // Check if the input string matches the regex pattern for numerical width and height
+                            if (Regex.IsMatch(program, @"rectangle \d+ \d+"))
                             {
-                                // Get the index of the width and height variables in the list of names
-                                int widthIndex = listVn.IndexOf(width);
-                                int heightIndex = listVn.IndexOf(height);
-
-                                // Get the width and height values from the list of values
-                                int widthValue = listV[widthIndex];
-                                int heightValue = listV[heightIndex];
-
-                                // Create a rectangle object and draw it using the values of the width and height variables
+                                // Get the width and height from the input string
+                                int width = Int32.Parse(splitprogram[1]);
+                                int height = Int32.Parse(splitprogram[2]);
+                                // Create a rectangle object and draw it
                                 rectangle rect = new rectangle();
-                                rect.drawRect(xPos, yPos, widthValue, heightValue, p, drawingSurface, g, color, fill);
+                                rect.drawRect(xPos, yPos, width, height, p, drawingSurface, g, color, fill);
+                            }
+                            // Check if the input string matches the regex pattern for string width and height
+                            else if (Regex.IsMatch(program, @"rectangle \w+ \w+"))
+                            {
+                                // Get the width and height variables from the program string
+                                string width = splitprogram[1];
+                                string height = splitprogram[2];
+
+                                // Check if the width and height variables are defined in the list of variables
+                                if (listVn.Contains(width) && listVn.Contains(height))
+                                {
+                                    // Get the index of the width and height variables in the list of names
+                                    int widthIndex = listVn.IndexOf(width);
+                                    int heightIndex = listVn.IndexOf(height);
+
+                                    // Get the width and height values from the list of values
+                                    int widthValue = listV[widthIndex];
+                                    int heightValue = listV[heightIndex];
+
+                                    // Create a rectangle object and draw it using the values of the width and height variables
+                                    rectangle rect = new rectangle();
+                                    rect.drawRect(xPos, yPos, widthValue, heightValue, p, drawingSurface, g, color, fill);
+                                }
+                                else
+                                {
+                                    // Show an error message if the width and height variables are not defined
+                                    MessageBox.Show("width and/or height variables not defined");
+                                }
                             }
                             else
                             {
-                                // Show an error message if the width and height variables are not defined
-                                MessageBox.Show("width and/or height variables not defined");
+                                // Show an error message if the input string does not match either of the regex patterns
+                                throw new Exception("Invalid rectangle parameters");
                             }
                         }
-                        else
-                        {
-                            // Show an error message if the input string does not match either of the regex patterns
-                            MessageBox.Show("invalid rectangle parameters");
-                        }
-                        break;
-                        // ...
-                    }break;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+                    break;
+
+
+
                 case "triangle":
-
-                    triangle tri = new triangle();
-
-                    tri.drawTri(p, drawingSurface, g, color, fill, xPos, yPos);
+                    try
+                    {
+                        triangle tri = new triangle();
+                        tri.drawTri(p, drawingSurface, g, color, fill, xPos, yPos);
+                    }
+                    catch (FormatException ex)
+                    {
+                        // Handles the exception here
+                        // shows a message box 
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
                     break;
 
                 case "position":
+
+
+                    try { 
+                    
                     // declare pen class
                     pen pen = new pen();
                    
@@ -292,11 +300,17 @@ namespace Shapies
                         // Show an error message if the input string does not match either of the regex patterns
                         MessageBox.Show("invalid position pen parameters");
                     }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception here, for example by showing an error message to the user
+                        MessageBox.Show("An error occured: " + ex.Message);
+                    }
                     break;
 
                 case "pen":
                   
-
+                    try { 
                     // Check if the input string matches the regex pattern for numerical x and y position
                     if (Regex.IsMatch(program, @"pen draw \d+ \d+"))
                     {
@@ -341,6 +355,13 @@ namespace Shapies
                         // Show an error message if the input string does not match either of the regex patterns
                         MessageBox.Show("invalid pen draw parameters");
                     }
+                    }
+                    catch (Exception e)
+                    {
+                        // Handle the exception here, for example by showing an error message
+                        MessageBox.Show("Invalid color: " + e.Message);
+                    }
+
                     break;
 
 
@@ -419,8 +440,7 @@ namespace Shapies
                         // Get the count of elements in the list
                         int count = listV.Count;
 
-                        // Show a message box with the value and name of the added element
-                        MessageBox.Show("it works" + listV[count - 1] + listVn[count - 1]);
+                       
                     }
                     else {
                         MessageBox.Show("error already exists");

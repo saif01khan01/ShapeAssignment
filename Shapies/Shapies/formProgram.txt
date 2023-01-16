@@ -1,8 +1,1 @@
-<<<<<<< HEAD
-circle 100
-rectangle 300
-position pen 10 10
-triangle
-=======
-fff
->>>>>>> 788a26c2d27fba535abc19e32274689cf1f295e4
+circle 120
